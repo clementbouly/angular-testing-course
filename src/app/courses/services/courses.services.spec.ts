@@ -8,7 +8,7 @@ import { COURSES, findLessonsForCourse } from "../../../../server/db-data";
 import { Course } from "../model/course";
 import { CoursesService } from "./courses.service";
 
-fdescribe("CoursesService", () => {
+describe("CoursesService", () => {
   let courseService: CoursesService;
   let httpTestingController: HttpTestingController;
   beforeEach(() => {

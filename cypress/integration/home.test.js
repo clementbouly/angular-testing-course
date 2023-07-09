@@ -1,64 +1,35 @@
+describe("Home Page", () => {
+  beforeEach(() => {
+    // cy.fixture("courses.json").as("coursesJSON");
 
+    cy.intercept("GET", "/api/courses", { fixture: "courses.json" });
 
+    // cy.server();
 
-describe('Home Page', () => {
+    // cy.route("/api/courses", "@coursesJSON").as("courses");
 
-    beforeEach(() => {
+    cy.visit("/");
+  });
 
-        cy.fixture('courses.json').as("coursesJSON");
+  it("should display a list of courses", () => {
+    cy.contains("All Courses");
 
-        cy.server();
+    // cy.wait('@courses');
 
-        cy.route('/api/courses', "@coursesJSON").as("courses");
+    cy.get("mat-card").should("have.length", 9);
+  });
 
-        cy.visit('/');
+  it("should display the advanced courses", () => {
+    cy.get(".mat-mdc-tab").should("have.length", 2);
 
-    });
+    cy.get(".mat-mdc-tab").last().click();
 
-    it('should display a list of courses', () => {
+    cy.get(".mat-mdc-tab-body-active .mat-mdc-card-title")
+      .its("length")
+      .should("be.gt", 1);
 
-        cy.contains("All Courses");
-
-        cy.wait('@courses');
-
-        cy.get("mat-card").should("have.length", 9);
-
-    });
-
-    it('should display the advanced courses', () => {
-
-        cy.get('.mat-tab-label').should("have.length", 2);
-
-        cy.get('.mat-tab-label').last().click();
-
-        cy.get('.mat-tab-body-active .mat-card-title').its('length').should('be.gt', 1);
-
-        cy.get('.mat-tab-body-active .mat-card-title').first()
-            .should('contain', "Angular Security Course");
-
-    });
-
-
+    cy.get(".mat-mdc-tab-body-active .mat-mdc-card-title")
+      .first()
+      .should("contain", "Angular Security Course");
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
